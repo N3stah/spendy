@@ -1,59 +1,49 @@
-# spendy.py — Final Version (All Fixes Applied)
-# A command-line spending tracker built step by step.
-
-import csv
+import csv  
 import os
 from datetime import datetime
-
-
-# ── CONFIG ─────────────────────────────────────────────
+ 
 VERSION    = "1.0"
 DATA_FILE  = "expenses.csv"
 MAX_AMOUNT = 99999
-
-
-# ── DISPLAY FUNCTIONS ──────────────────────────────────
-
-def show_banner():
-    """Print the welcome banner with version and available commands."""
+ 
+ #  welcome banner and command menu
+def show_banner(): 
     title = f"SPENDY v{VERSION}"
-    print("╔══════════════════════════════╗")
-    print(f"║  {title:^26}  ║")
-    print("║     Your spending tracker    ║")
-    print("╚══════════════════════════════╝")
+    print("------------------------------")
+    print(f"|  {title:^26}|")
+    print("|     Your spending tracker  |")
+    print("------------------------------")
     print()
-    print("  add      → Add a new expense")
-    print("  show     → View all expenses")
-    print("  filter   → Filter by category")
-    print("  delete   → Remove an expense")
-    print("  help     → Show this menu")
-    print("  done     → Exit the program")
+    print("  add      - Add a new expense")
+    print("  show     - View all expenses")
+    print("  filter   - Filter by category")
+    print("  delete   - Remove an expense")
+    print("  help     - Show this menu")
+    print("  done     - Exit the program")
     print()
 
-
+#   Help menu function
 def show_help():
-    """Print the help menu with available commands."""
-    print("\n--- Commands ---")
-    print("  add      → Add a new expense")
-    print("  show     → View all expenses")
-    print("  filter   → Filter by category")
-    print("  delete   → Remove an expense")
-    print("  help     → Show this menu")
-    print("  done     → Exit the program")
-    print("----------------\n")
+    print("\n Commands")
+    print("  add      - Add a new expense")
+    print("  show     - View all expenses")
+    print("  filter   - Filter by category")
+    print("  delete   - Remove an expense")
+    print("  help     - Show this menu")
+    print("  done     - Exit the program")
+    print("\n")
 
-
-def show_summary(expenses):
-    """Print a formatted table of all expenses with dates, categories, and the total."""
+#   summary function to display all expenses in a formatted table
+def show_summary(expenses): 
     if not expenses:
         print("No expenses recorded yet.\n")
         return
 
-    print("\n--- All Expenses ---")
+    print("\n All Expenses")
     print(f"{'#':<4} {'Date':<16} {'Description':<20} {'Amount':>10} {'Category':<12}")
     print("-" * 66)
 
-    for i, expense in enumerate(expenses, start=1):
+    for i, expense in enumerate(expenses, start=1):  
         raw_desc = expense["description"]
         desc     = raw_desc[:18] + ".." if len(raw_desc) > 20 else raw_desc
         amt      = expense["amount"]
@@ -64,11 +54,10 @@ def show_summary(expenses):
     total = sum(e["amount"] for e in expenses)
     print("-" * 66)
     print(f"{'Total:':<42} ${total:>9.2f}")
-    print("--------------------\n")
+    print("\n")
 
-
+#   filter function to show expenses by category in a formatted table.
 def show_filter(expenses):
-    """Ask for a category and show a formatted table of matching expenses."""
     if not expenses:
         print("No expenses recorded yet.\n")
         return
@@ -92,16 +81,14 @@ def show_filter(expenses):
     total = sum(e["amount"] for e in matches)
     print("-" * 54)
     print(f"{'Total:':<42} ${total:>9.2f}")
-    print("--------------------\n")
+    print("\n")
 
 
-# ── STORAGE FUNCTIONS ──────────────────────────────────
-
-def load_expenses():
-    """Load saved expenses from the CSV file, or return an empty list if none exist."""
+#   Expenses functions to load expenses in the CSV file.
+def load_expenses(): 
     if not os.path.exists(DATA_FILE) or os.path.getsize(DATA_FILE) == 0:
-        return []
-
+        return [] 
+    
     expenses = []
     with open(DATA_FILE, "r", newline="") as f:
         reader = csv.DictReader(f)
@@ -119,7 +106,7 @@ def load_expenses():
             })
     return expenses
 
-
+#   Expenses functions to save expenses in the CSV file.
 def save_expense(description, amount, category, timestamp):
     """Append a single expense to the CSV file, writing the header on first run."""
     file_exists = os.path.exists(DATA_FILE) and os.path.getsize(DATA_FILE) > 0
@@ -129,20 +116,16 @@ def save_expense(description, amount, category, timestamp):
             writer.writerow(["description", "amount", "category", "date"])
         writer.writerow([description, amount, category, timestamp])
 
-
-def rewrite_csv(expenses):
-    """Overwrite the CSV file with the current list of expenses."""
+#   Expenses funtion to rewrite expenses in the CSV file.
+def rewrite_csv(expenses): 
     with open(DATA_FILE, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["description", "amount", "category", "date"])
         for e in expenses:
-            writer.writerow([e["description"], e["amount"], e["category"], e["date"]])
-
-
-# ── DELETE FUNCTION ────────────────────────────────────
-
-def delete_expense(expenses):
-    """Let the user remove an expense by its number after confirmation."""
+            writer.writerow([e["description"], e["amount"], e["category"], e["date"]])  
+            
+#   Delete function for user to remove an expense by its number after confirmation.
+def delete_expense(expenses): 
     if not expenses:
         print("No expenses to delete.\n")
         return
@@ -152,11 +135,11 @@ def delete_expense(expenses):
     try:
         choice = int(input("Enter the number of the expense to delete: "))
     except ValueError:
-        print("That's not a number. Cancelled.\n")
+        print("That's not a number - Cancelled.\n")
         return
 
     if choice < 1 or choice > len(expenses):
-        print("That number is not in the list. Cancelled.\n")
+        print("That number is not in the list - Cancelled.\n")
         return
 
     target  = expenses[choice - 1]
@@ -169,13 +152,11 @@ def delete_expense(expenses):
         rewrite_csv(expenses)
         print(f"Deleted: {removed['description']} — ${removed['amount']:.2f}\n")
     else:
-        print("Cancelled. Nothing was deleted.\n")
+        print("Cancelled - Nothing was deleted.\n")
 
 
-# ── INPUT FUNCTIONS ────────────────────────────────────
-
-def get_description():
-    """Prompt the user for a non-blank description or command."""
+#   Input function to promt the user for a non-blank description or command.
+def get_description():  
     while True:
         description = input("Description (or command): ").strip()
         if description == "":
@@ -183,42 +164,39 @@ def get_description():
             continue
         return description
 
-
-def get_valid_amount():
-    """Prompt the user for a valid positive expense amount within the allowed range."""
+#   Prompt user for a valid posotive expense amount.
+def get_valid_amount():  
     while True:
         amount_input = input("Amount: $").strip()
         try:
             amount = float(amount_input)
         except ValueError:
-            print("That's not a valid amount, try again.")
+            print("That's not a valid amount -try again.")
             continue
-
-        if amount <= 0:
-            print("Amount must be greater than zero. Try again.")
-            continue
-
+        if amount <= 0:   
+            print("Amount must be greater than zero - Try again.")
+            continue   
         if amount > MAX_AMOUNT:
             print(f"Amount is too large. Maximum allowed is ${MAX_AMOUNT:,}. Try again.")
             continue
 
         return amount
 
-
+#  Prompt user for a non-blank expense
 def get_category():
     """Prompt the user for a non-blank expense category and return it lowercased."""
     while True:
-        category = input("Category (e.g. food, transport, fun): ").strip().lower()
+        category = input("Category (e.g. food, transport, medical, fun, etc): ").strip().lower()
         if category == "":
             print("Category cannot be blank. Try again.")
             continue
         return category
 
 
-# ── MAIN ─────────────────────────────────────────────
+# Main loop function to load, add, save, show, filter, delete, and help.
 
 def main():
-    """Run the main loop: load, add, save, show, filter, delete, and help."""
+
     expenses = load_expenses()
     show_banner()
 
