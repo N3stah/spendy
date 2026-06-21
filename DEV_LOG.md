@@ -3,7 +3,7 @@ What I did:Created spendy.py with a config block, 3 functions with docstrings, a
 What confused me: wasn't sure why we needed if __name__ == "__main__" since the program seemed to work without it. 
 # Step 2 — Keep Adding Until Done
 What I did: Added a while loop that keeps asking for expenses until I type "done". Each expense gets saved into a list as a dictionary.  
-# Step 3 — Handle Bad Input  
+# Step 3 — Handle Bad Input   
 What I did: Wrapped the amount input in a try/except block inside a while loop so the program no longer crashes on bad input.   
 What confused me:I didn't understand the difference between try and except and when each one runs.
 How I figured it out: I realised try runs the normal code and except only runs when something goes wrong — like when someone types abc instead of a number.  
