@@ -46,3 +46,8 @@ How I fixed it: Deleted the old file so spendy.py could create a fresh one with 
 Hardest step: Step 04 — Remember Between Runs. I didn't know how to read and write files at all, and the csv module was completely new to me.  
 Easiest step: Step 02 — Keep Adding Until Done. Once I understood while loops the logic clicked quickly and it felt satisfying to see it working.  
 What I'd improve with more time: I'd add a way to edit an expense after adding it, not just delete it, and also I would add a search command to find expenses by keyword, and maybe a monthly summary that groups expenses by month instead of just by category  
+
+# Add a count command  - update
+What I did: Added a count command to display the total expenses inside the main function with in the While true loop 
+           Also update the welcome banner to have the count command
+I wasnt confussed in this step I figured out that the load_expenses function loads expenses CSV file data, and since the csv load the data into a list variable i used a len() funtion to be able to get the total number of item insie the expense.csv file.

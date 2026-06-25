@@ -20,6 +20,7 @@ def show_banner():
     print("  delete   - Remove an expense")
     print("  help     - Show this menu")
     print("  done     - Exit the program")
+    print("  count    - display the total expenses")
     print()   
     
 #   Help menu function
@@ -215,6 +216,9 @@ def main():
   
         elif command == "help":  
            show_help() 
+        
+        elif command == "count": 
+            print(f"Total expenses: {len(expenses)}")   
   
         else:    
             amount    = get_valid_amount()   
