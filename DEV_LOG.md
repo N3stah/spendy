@@ -50,4 +50,11 @@ What I'd improve with more time: I'd add a way to edit an expense after adding i
 # Add a count command  - update
 What I did: Added a count command to display the total expenses inside the main function with in the While true loop 
            Also update the welcome banner to have the count command
-I wasnt confussed in this step I figured out that the load_expenses function loads expenses CSV file data, and since the csv load the data into a list variable i used a len() funtion to be able to get the total number of item insie the expense.csv file.
+I wasnt confussed in this step, I figured out that the load_expenses function loads expenses CSV file data, and since the csv load the data into a list variable i used a len() funtion to be able to get the total number of item insie the expense.csv file.
+# additional fix for the count command
+I had forgot to update the help menu funtion to also include the count function
+
+# Add a total command
+What I did I: I added a totat command to display the a grand total for all my expenses recoded in the expense.csv file insie the main function.
+             Also update the welcome bunner and the help menu function to have the total command
+I wasnt confused in this step, I used the same logic I had used in show summary funtion an used a sum() function plus a generator expression > sum(e["amount"] for e in expenses)

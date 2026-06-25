@@ -21,6 +21,7 @@ def show_banner():
     print("  help     - Show this menu")
     print("  done     - Exit the program")
     print("  count    - display the total expenses")
+    print("  total    - display the total amount spent")
     print()   
     
 #   Help menu function
@@ -32,6 +33,8 @@ def show_help():
     print("  delete   - Remove an expense")
     print("  help     - Show this menu")
     print("  done     - Exit the program")
+    print("  count    - display the total expenses")
+    print("  total    - display the total amount spent")
     print("\n")
     
 #   summary function to display all expenses in a formatted table
@@ -218,8 +221,12 @@ def main():
            show_help() 
         
         elif command == "count": 
-            print(f"Total expenses: {len(expenses)}")   
-  
+            print(f"Total expenses: {len(expenses)}")
+         
+        elif command == "total":
+            grand_total = sum(e["amount"] for e in expenses)
+            print(f"Total spent: ${grand_total:.2f}\n") 
+                 
         else:    
             amount    = get_valid_amount()   
             category  = get_category()     
