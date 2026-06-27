@@ -22,6 +22,8 @@ def show_banner():
     print("  done     - Exit the program")
     print("  count    - display the total expenses")
     print("  total    - display the total amount spent")
+    print("  delete   - Remove an expense")
+    print("  edit     - Modify an existing expense")
     print()   
     
 #   Help menu function
@@ -35,6 +37,8 @@ def show_help():
     print("  done     - Exit the program")
     print("  count    - display the total expenses")
     print("  total    - display the total amount spent")
+    print("  delete   - Remove an expense")
+    print("  edit     - Modify an existing expense")
     print("\n")
     
 #   summary function to display all expenses in a formatted table
@@ -156,7 +160,44 @@ def delete_expense(expenses):
         print(f"Deleted: {removed['description']} — ${removed['amount']:.2f}\n")  
     else:  
         print("Cancelled - Nothing was deleted.\n")  
-   
+
+# Edit function for users to modify an existing expense by its number after confirmation.
+def edit_expense(expenses):
+    if not expenses:
+        print("No expenses to edit.\n")
+        return
+
+    show_summary(expenses)
+
+    try:
+        choice = int(input("Enter the number of the expense to edit: "))
+    except ValueError:
+        print("That's not a number - Cancelled.\n")
+        return
+
+    if choice < 1 or choice > len(expenses):
+        print("That number is not in the list - Cancelled.\n")
+        return
+
+    target = expenses[choice - 1]
+    print(f"\nEditing '{target['description']} — ${target['amount']:.2f}'")
+    print("Enter new details")
+    
+    new_description      = get_description()
+    new_amount    = get_valid_amount()
+    new_category  = get_category()
+    new_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+    
+    expenses[choice - 1] = {
+        "description": new_description,
+        "amount":      new_amount,
+        "category":    new_category,
+        "date":        new_timestamp
+    }
+    
+    rewrite_csv(expenses)
+    print(f"Updated: {new_description} — ${new_amount:.2f}\n")  
+          
 #   Input function to promt the user for a non-blank description or command.
 def get_description():  
     while True:   
@@ -225,7 +266,10 @@ def main():
          
         elif command == "total":
             grand_total = sum(e["amount"] for e in expenses)
-            print(f"Total spent: ${grand_total:.2f}\n") 
+            print(f"Total spent: ${grand_total:.2f}\n")
+            
+        elif command == "edit":
+            edit_expense(expenses)    
                  
         else:    
             amount    = get_valid_amount()   

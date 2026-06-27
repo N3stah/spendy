@@ -58,3 +58,20 @@ I had forgot to update the help menu funtion to also include the count function
 What I did I: I added a totat command to display the a grand total for all my expenses recoded in the expense.csv file insie the main function.
              Also update the welcome bunner and the help menu function to have the total command
 I wasnt confused in this step, I used the same logic I had used in show summary funtion an used a sum() function plus a generator expression > sum(e["amount"] for e in expenses)
+
+# # Edit function for users to modify an existing expense by its number after confirmation.
+def edit_expense(expenses):
+
+elif command == "edit":
+            edit_expense(expenses) 
+What I did: I created an edit command that allows users to modify an existing expense by selsecting the expense using the list number, by one can input hiss new values from discription amount and category of his/her choice.
+    I did this by adding edit function before the main loop function and also added a edit command in thje main loop function.
+>IN THE EDIT FUNNTION
+1. In the edit function I Used a <if not expenses> this helps to check if the list is empty. if it find the list in the csv file empty i t prints a message No expenses to edit.
+2. added a display option that prints the formatte table do that one can be able to see the number of their recorded expenses.
+3. added a try and expect ValueError this converts a user inptut into a whole number and if one accientally type a word it identify the error and print "That's not a number - Cancelled.
+4. added a validating range using <if choice < 1 or choice > len(expenses)> this prints a erroe message <That number is not in the list - Cancelled> if the number type is not in the list.
+5. target = expenses[choice - 1] introduced a targeting index that grabs ath dictonary that the user wants to change using -1 to start counting fro 1 since python uses usualy start tomcount from 0 
+6. I used the same helper funtion that I already had used to ask the user for updates details. 
+7. expenses[choice - 1] this help in updating the list in my csv file this is able to pick the exact same spot an it overwrites the old dictionary with a bland new one containing the upated values
+8. rewrite_csv(expenses) this helpsby saving the newly updated list and it overwrites my enter csv file.
