@@ -75,3 +75,10 @@ What I did: I created an edit command that allows users to modify an existing ex
 6. I used the same helper funtion that I already had used to ask the user for updates details. 
 7. expenses[choice - 1] this help in updating the list in my csv file this is able to pick the exact same spot an it overwrites the old dictionary with a bland new one containing the upated values
 8. rewrite_csv(expenses) this helpsby saving the newly updated list and it overwrites my enter csv file.
+
+### Task 003
+## Stage 1 - Pytest Setup
+What I did: first- Installed pytest in the virtual environment.       
+            sencond- created `test_spendy.py` file in spendy folder, and wrote a basic math assertion to test my setup.
+What confused me: I was running the pyton script directly insted of using pytest.
+How I figured it out: Ran `pytest` in the terminal and confirmed it automatically detected `test_spendy.py` and returned "1 passed".
