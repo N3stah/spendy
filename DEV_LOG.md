@@ -86,3 +86,7 @@ How I figured it out: Ran `pytest` in the terminal and confirmed it automaticall
 What I did: Wrote a test function that builds a sample list of expenses and asserts that the sum of their amounts matches $22.00.
 What confused me: How generator expressions `sum(e["amount"] for e in sample_expenses)` work in isolation inside a test.
 How I figured it out: Created sample data matching Spendy's dictionary structure and verified that pytest checked the sum against my expected total.
+## 3 - trying to test the add command 
+   Ran into a error trying to run pytest in the the terminal,
+   Error  OSError: pytest: reading from stdin while output is captured!  Consider using `-s`.
+   I tried writing the automated test that call `input()` directly and I realized that using input() freeze the program to wait for a human typing at a keyboard. This might have happend because my data logic is tangled inside the input function and I cannot test the underlying data without triggering a terminal prompt using my keyboard.
