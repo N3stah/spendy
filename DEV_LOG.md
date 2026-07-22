@@ -82,3 +82,7 @@ What I did: first- Installed pytest in the virtual environment.
             sencond- created `test_spendy.py` file in spendy folder, and wrote a basic math assertion to test my setup.
 What confused me: I was running the pyton script directly insted of using pytest.
 How I figured it out: Ran `pytest` in the terminal and confirmed it automatically detected `test_spendy.py` and returned "1 passed".
+## Stage 2 - Testing 
+What I did: Wrote a test function that builds a sample list of expenses and asserts that the sum of their amounts matches $22.00.
+What confused me: How generator expressions `sum(e["amount"] for e in sample_expenses)` work in isolation inside a test.
+How I figured it out: Created sample data matching Spendy's dictionary structure and verified that pytest checked the sum against my expected total.
