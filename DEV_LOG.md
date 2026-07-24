@@ -90,3 +90,7 @@ How I figured it out: Created sample data matching Spendy's dictionary structure
    Ran into a error trying to run pytest in the the terminal,
    Error  OSError: pytest: reading from stdin while output is captured!  Consider using `-s`.
    I tried writing the automated test that call `input()` directly and I realized that using input() freeze the program to wait for a human typing at a keyboard. This might have happend because my data logic is tangled inside the input function and I cannot test the underlying data without triggering a terminal prompt using my keyboard.
+## Stage 4 - Separating Logic from I/O
+What I did: I refactored Spendy to separate user interaction (`input`/`print`) from data processing by creating pure functions `add_expense_logic` and `calculate_total` in spendy.py inside the main loop function.
+Bug encountered: When running `pytest` after the refactor, I encountered a   persistent failure: `OSError: reading from stdin while output is captured`. Additionally, manual testing showed a `KeyboardInterrupt` traceback when exiting the terminal app with `Ctrl+C` insted of using the `DONE` command in the terminal.
+How I figured it out: I realized the pytest error was caused by a leftover interactive test (`test_add_expense_interactive`) from Stage 3 that was still sitting in my `test_spendy.py` file, trying to read from standard input. Once I deleted that lingering test, pytest passed successfully.

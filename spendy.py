@@ -90,7 +90,21 @@ def show_filter(expenses):
     print("-" * 54)  
     print(f"{'Total:':<42} ${total:>9.2f}")  
     print("\n")
- 
+    
+ # Addition of pure locgic functions for testing purposes, separated from user input/output.
+def add_expense_logic(expenses, description, amount, category, timestamp):
+    new_expense = {
+        "description": description,
+        "amount":      amount,
+        "category":    category,
+        "date":        timestamp
+    }
+    expenses.append(new_expense)
+    return expenses
+
+#Calculates the sum of all expenses and returns the total
+def calculate_total(expenses):
+    return sum(e["amount"] for e in expenses)
  
 #   Expenses functions to load expenses in the CSV file.
 def load_expenses(): 
@@ -269,7 +283,25 @@ def main():
             print(f"Total spent: ${grand_total:.2f}\n")
             
         elif command == "edit":
-            edit_expense(expenses)    
+            edit_expense(expenses)   
+        
+        elif command == "add":    
+            description = get_description()
+            amount      = get_valid_amount()   
+            category    = get_category()     
+            timestamp   = datetime.now().strftime("%Y-%m-%d %H:%M") 
+  
+            # Call's the new pure logic function
+            add_expense_logic(expenses, description, amount, category, timestamp)
+            
+            # Save to CSV(I/O operation separated from logic)
+            save_expense(description, amount, category, timestamp) 
+            print(f"Added: {description} — ${amount:.2f} [{category}] on {timestamp}\n")  
+
+        elif command == "total":
+            # Call's logic math function!
+            grand_total = calculate_total(expenses)
+            print(f"Total spent: ${grand_total:.2f}\n")    
                  
         else:    
             amount    = get_valid_amount()   
