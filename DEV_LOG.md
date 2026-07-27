@@ -95,4 +95,10 @@ What I did: I refactored Spendy to separate user interaction (`input`/`print`) f
 Bug encountered: When running `pytest` after the refactor, I encountered a   persistent failure: `OSError: reading from stdin while output is captured`. Additionally, manual testing showed a `KeyboardInterrupt` traceback when exiting the terminal app with `Ctrl+C` insted of using the `DONE` command in the terminal.
 How I figured it out: I realized the pytest error was caused by a leftover interactive test (`test_add_expense_interactive`) from Stage 3 that was still sitting in my `test_spendy.py` file, trying to read from standard input. Once I deleted that lingering test, pytest passed successfully.
 ## Stage 5 - Testing Freed Logic and Edge Cases
-What I did: Wrote automated unit tests for `calculate_total` and added `add_expense_logic`, and also including adversarial edge cases for testing an empty expense list.
+What I did: Wrote automated unit tests for `calculate_total` and added `add_expense_logic`, and also including adversarial edge cases for testing an empty expense list .  
+
+  ## Testing a negative number incase of a refund being made.
+     What I did: I Added a test case test_calculate_total_negatives to ensure the math logic correctly handles negative numbers thats as a refund.
+     What confused me: I had to wrap my head around why we test negative numbers if our input validator already blocks them.
+     How I fugured it out: Come to find out that the pure logic function in only tested independently and we need to know that the math finction won't be able to break if we add a refund feature that bypasses the input validator.
+     

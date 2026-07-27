@@ -39,3 +39,17 @@ def test_add_expense_logic():
     assert len(updated) == 1
     assert updated[0]["description"] == "Snack"
     assert updated[0]["amount"] == 3.00
+    
+   # STAGE 5.1- Testing negative numbers in the pure function if someone gets a refund.
+def test_calculate_total_negatives():
+    #data simulating a purchase and a refund
+    sample_expenses = [
+        {"description": "Shirt", "amount": 50.00, "category": "clothes", "date": "2026-07-27 15:30"},
+        {"description": "Refund", "amount": -20.00, "category": "clothes", "date": "2026-07-27 15:30"}
+    ]
+    
+    #getting to run a total calculation on the data
+    total = calculate_total(sample_expenses)
+    
+    # 3. ASSERTION: Demand that 50 + (-20) equals 30
+    assert total == 30.00
