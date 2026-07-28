@@ -102,3 +102,5 @@ What I did: Wrote automated unit tests for `calculate_total` and added `add_expe
      What confused me: I had to wrap my head around why we test negative numbers if our input validator already blocks them.
      How I fugured it out: Come to find out that the pure logic function in only tested independently and we need to know that the math finction won't be able to break if we add a refund feature that bypasses the input validator.
      
+   ## STAGE 6 "Get Started" guide (docs.pytest.org/en/stable/getting-started.html).
+    What I have learned from the pytest guide is that wasnt in the brief is that the pytests allows one to group all related test function inside a python class like "class TestExpenses". And by this I have learned that it helps to group or keep large test files organized by feature without breaking how the pytest automatically finds and runs them. 
